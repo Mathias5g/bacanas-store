@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/04f52231de.js" crossorigin="anonymous"></script>
     <title>Document</title>
 </head>
 <body class="container-fluid p-0 h-100 mh-100" style="font-family: 'Mochiy Pop P One', sans-serif;">
@@ -21,20 +22,20 @@
         <ul class="d-flex" style="list-style: none">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Produtos
+                    Categorias
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Listar Produtos</a></li>
-                    <li><a class="dropdown-item" href="#">Adicionar Produto</a></li>
+                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/categoria">Listar Categorias</a></li>
+                    <li><a class="dropdown-item" href="#">Adicionar Categoria</a></li>
                 </ul>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Categorias
+                    Produtos
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Listar Categorias</a></li>
-                    <li><a class="dropdown-item" href="#">Adicionar Categoria</a></li>
+                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/produto">Listar Produtos</a></li>
+                    <li><a class="dropdown-item" href="#">Adicionar Produto</a></li>
                 </ul>
             </li>
             <li class="nav-item dropdown">
@@ -42,7 +43,7 @@
                     Usuarios
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Listar Usuarios</a></li>
+                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/usuario">Listar Usuarios</a></li>
                     <li><a class="dropdown-item" href="#">Adicionar Usuario</a></li>
                 </ul>
             </li>
