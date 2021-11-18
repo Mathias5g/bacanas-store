@@ -1,18 +1,20 @@
 package br.com.bacana.store.Model;
 
+import java.sql.Timestamp;
+
 public class Produto {
     private int id;
     private String Codigo;
     private String Produto;
     private String Descricao;
     private String ImagemB64;
-    private String Categoria;
+    private Integer Categoria;
     private Double Preco;
+    private Timestamp Created_At;
+    private Timestamp Updated_At;
 
-    public Produto(String codigo, String produto, String descricao) {
-        Codigo = codigo;
-        Produto = produto;
-        Descricao = descricao;
+    public Produto() {
+        super();
     }
 
     public int getId() {
@@ -55,11 +57,11 @@ public class Produto {
         ImagemB64 = imagemB64;
     }
 
-    public String getCategoria() {
+    public Integer getCategoria() {
         return Categoria;
     }
 
-    public void setCategoria(String categoria) {
+    public void setCategoria(Integer categoria) {
         Categoria = categoria;
     }
 
@@ -69,5 +71,21 @@ public class Produto {
 
     public void setPreco(Double preco) {
         Preco = preco;
+    }
+
+    public Timestamp getCreated_At() {
+        return Created_At;
+    }
+
+    public void setCreated_At(Timestamp created_At) {
+        Created_At = created_At;
+    }
+
+    public Timestamp getUpdated_At() {
+        return Updated_At;
+    }
+
+    public void setUpdated_At(Timestamp updated_At) {
+        Updated_At = updated_At;
     }
 }

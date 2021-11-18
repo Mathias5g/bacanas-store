@@ -1,9 +1,18 @@
 package br.com.bacana.store.Model;
 
+import java.sql.Timestamp;
+
 public class Usuario {
     private int id;
     private String Nome;
     private String Email;
+    private String Password;
+    private Timestamp Created_At;
+    private Timestamp Updated_At;
+
+    public Usuario() {
+        super();
+    }
 
     public int getId() {
         return id;
@@ -29,14 +38,6 @@ public class Usuario {
         Email = email;
     }
 
-    public String getUsuario() {
-        return Usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        Usuario = usuario;
-    }
-
     public String getPassword() {
         return Password;
     }
@@ -45,6 +46,19 @@ public class Usuario {
         Password = password;
     }
 
-    private String Usuario;
-    private String Password;
+    public Timestamp getCreated_At() {
+        return Created_At;
+    }
+
+    public void setCreated_At(Timestamp created_At) {
+        Created_At = created_At;
+    }
+
+    public Timestamp getUpdated_At() {
+        return Updated_At;
+    }
+
+    public void setUpdated_At(Timestamp updated_At) {
+        Updated_At = updated_At;
+    }
 }

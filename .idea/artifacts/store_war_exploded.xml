@@ -16,6 +16,7 @@
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="google.code.gson" />
+          <element id="library" level="project" name="mysql.connector.java" />
         </element>
       </element>
       <element id="directory" name="META-INF">
