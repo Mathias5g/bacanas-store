@@ -5,11 +5,13 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "CategoriaServlet", value = "/categoria")
+@WebServlet(name = "Categoria", value = "/admin/categoria")
 public class CategoriaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        String INDEX_CATEGORIA = "/admin/categoria/index.jsp";
+        RequestDispatcher view = request.getRequestDispatcher(INDEX_CATEGORIA);
+        view.forward(request, response);
     }
 
     @Override

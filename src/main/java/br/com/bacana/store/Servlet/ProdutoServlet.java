@@ -7,11 +7,13 @@ import java.io.IOException;
 
 
 
-@WebServlet(name = "ProdutoServlet", value = "/produto")
+@WebServlet(name = "ProdutoServlet", value = "/admin/produto")
 public class ProdutoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        String INDEX_PRODUTO = "/admin/produto/index.jsp";
+        RequestDispatcher view = request.getRequestDispatcher(INDEX_PRODUTO);
+        view.forward(request, response);
     }
 
     @Override
