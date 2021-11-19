@@ -2,6 +2,7 @@ package br.com.bacana.store.Servlet;
 
 import br.com.bacana.store.Dao.UsuarioDao;
 import br.com.bacana.store.Model.Usuario;
+import br.com.bacana.store.Utils.SessionCheck;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -13,10 +14,11 @@ import java.util.Objects;
 @WebServlet(name = "Admin", value = "/admin")
 public class AdminServlet extends HttpServlet {
 
-    private final String INDEX_SITE = "/index.jsp";
-    private final String INDEX_ADM = "/admin/index.jsp";
     private RequestDispatcher view;
     private final UsuarioDao usuarioDao;
+    private HttpSession session;
+    private final String INDEX_SITE = "/index.jsp";
+    private final String INDEX_ADM = "/admin/index.jsp";
 
     public AdminServlet() throws SQLException, ClassNotFoundException {
         super();
@@ -26,6 +28,15 @@ public class AdminServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        session = request.getSession();
+        String checked = (String) session.getAttribute("authenticated");
+
+        if(!Objects.equals(checked, "autenticado")) {
+            view = request.getRequestDispatcher(INDEX_SITE);
+            view.forward(request, response);
+        }
+
         view = request.getRequestDispatcher(INDEX_ADM);
         view.forward(request, response);
     }
@@ -45,6 +56,8 @@ public class AdminServlet extends HttpServlet {
             Usuario getUsuario = usuarioDao.ReadUser(email, password);
 
             if(getUsuario.getId() > 0) {
+                session = request.getSession();
+                session.setAttribute("authenticated", "autenticado");
                 view = request.getRequestDispatcher(INDEX_ADM);
             } else {
                 view = request.getRequestDispatcher(INDEX_SITE);
