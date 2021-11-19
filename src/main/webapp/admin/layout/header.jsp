@@ -26,7 +26,7 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/categoria">Listar Categorias</a></li>
-                    <li><a class="dropdown-item" href="#">Adicionar Categoria</a></li>
+                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/categoria?acao=inserir">Adicionar Categoria</a></li>
                 </ul>
             </li>
             <li class="nav-item dropdown">
@@ -35,7 +35,7 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/produto">Listar Produtos</a></li>
-                    <li><a class="dropdown-item" href="#">Adicionar Produto</a></li>
+                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/produto?acao=inserir">Adicionar Produto</a></li>
                 </ul>
             </li>
             <li class="nav-item dropdown">
@@ -44,7 +44,7 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/usuario">Listar Usuarios</a></li>
-                    <li><a class="dropdown-item" href="#">Adicionar Usuario</a></li>
+                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/usuario?acao=inserir">Adicionar Usuario</a></li>
                 </ul>
             </li>
         </ul>
