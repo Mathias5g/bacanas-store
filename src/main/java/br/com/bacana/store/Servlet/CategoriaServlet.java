@@ -44,24 +44,25 @@ public class CategoriaServlet extends HttpServlet {
             view.forward(request, response);
         }
 
-        if(acao.equalsIgnoreCase("editar")) {
-            try {
-                categoriaDao.readCategoria(8);
-            } catch (SQLException e) {
-                e.printStackTrace();
+        if(acao != null) {
+            if(acao.equalsIgnoreCase("editar")) {
+                try {
+                    categoriaDao.readCategoria(8);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                forward = EDITAR_CATEGORIA;
+            } else if(acao.equalsIgnoreCase("exibir")) {
+                try {
+                    categoriaDao.readCategoria(8);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                forward = EXIBIR_CATEGORIA;
             }
-            forward = EDITAR_CATEGORIA;
-        } else if(acao.equalsIgnoreCase("exibir")) {
-            try {
-                categoriaDao.readCategoria(8);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            forward = EXIBIR_CATEGORIA;
         } else {
             forward = INDEX_CATEGORIA;
         }
-
 
         view = request.getRequestDispatcher(forward);
         view.forward(request, response);
@@ -69,12 +70,23 @@ public class CategoriaServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        session = request.getSession();
+        String checked = (String) session.getAttribute("authenticated");
+
+        if(!Objects.equals(checked, "autenticado")) {
+            view = request.getRequestDispatcher(INDEX_SITE);
+            view.forward(request, response);
+        }
+
         categoria.setCategoria(request.getParameter("categoria"));
         categoria.setLinha(request.getParameter("linha"));
         categoria.setFaixaEtaria(request.getParameter("faixa_etaria"));
 
         try {
             categoriaDao.createCategoria(categoria);
+            view = request.getRequestDispatcher(INDEX_CATEGORIA);
+            view.forward(request, response);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -82,12 +94,23 @@ public class CategoriaServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        session = request.getSession();
+        String checked = (String) session.getAttribute("authenticated");
+
+        if(!Objects.equals(checked, "autenticado")) {
+            view = request.getRequestDispatcher(INDEX_SITE);
+            view.forward(request, response);
+        }
+
         categoria.setId(Integer.parseInt(request.getParameter("id")));
         categoria.setCategoria(request.getParameter("categoria"));
         categoria.setLinha(request.getParameter("linha"));
         categoria.setFaixaEtaria(request.getParameter("faixa_etaria"));
         try {
             categoriaDao.updateCategoria(categoria);
+            view = request.getRequestDispatcher(INDEX_CATEGORIA);
+            view.forward(request, response);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -95,9 +118,20 @@ public class CategoriaServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        session = request.getSession();
+        String checked = (String) session.getAttribute("authenticated");
+
+        if(!Objects.equals(checked, "autenticado")) {
+            view = request.getRequestDispatcher(INDEX_SITE);
+            view.forward(request, response);
+        }
+
         categoria.setId(Integer.parseInt(request.getParameter("id")));
         try {
             categoriaDao.deleteCategoria(categoria.getId());
+            view = request.getRequestDispatcher(INDEX_CATEGORIA);
+            view.forward(request, response);
         } catch (SQLException e) {
             e.printStackTrace();
         }
