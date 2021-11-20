@@ -1,5 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html lang=pt_BR>
+<%@ page contentType="text/html;charset=UTF-8" language="java"  pageEncoding="UTF-8"%>
+<html lang=pt-br>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"

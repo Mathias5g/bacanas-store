@@ -1,5 +1,6 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html lang=pt_BR>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java"%>
+
+<html lang=pt-br>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -10,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/04f52231de.js" crossorigin="anonymous"></script>
-    <title>Document</title>
+    <title>PAINEL ADMINISTRATIVO</title>
 </head>
 <body class="container-fluid p-0 h-100 mh-100" style="font-family: 'Mochiy Pop P One', sans-serif;">
 <header class="d-flex align-items-center justify-content-between p-4">
