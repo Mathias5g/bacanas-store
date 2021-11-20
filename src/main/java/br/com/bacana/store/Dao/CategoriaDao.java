@@ -16,64 +16,88 @@ public class CategoriaDao {
         connection = DBConnection.getConnection();
     }
 
-    public void createCategoria(Categoria categoria) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO categorias(nome, linha, faixa_etaria, created_at, updated_at) values(?, ?, ?, ?, ?)");
-        preparedStatement.setString(1, categoria.getCategoria());
-        preparedStatement.setString(2, categoria.getLinha());
-        preparedStatement.setString(3, categoria.getFaixaEtaria());
-        preparedStatement.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
-        preparedStatement.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
+    public void createCategoria(Categoria categoria) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO categorias(codigo, nome, linha, faixa_etaria, created_at, updated_at) values(?, ?, ?, ?, ?, ?)");
+            preparedStatement.setString(1, categoria.getCodigo());
+            preparedStatement.setString(2, categoria.getCategoria());
+            preparedStatement.setString(3, categoria.getLinha());
+            preparedStatement.setString(4, categoria.getFaixaEtaria());
+            preparedStatement.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
+            preparedStatement.setTimestamp(6, new Timestamp(System.currentTimeMillis()));
 
-        preparedStatement.executeUpdate();
-        preparedStatement.close();
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public Categoria readCategoria(int categoriaId) throws SQLException {
+    public Categoria readCategoria(int categoriaId) {
         Categoria categoria = new Categoria();
-        PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM categorias WHERE id = ?");
-        preparedStatement.setInt(1, categoriaId);
-        ResultSet rs = preparedStatement.executeQuery();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM categorias WHERE id = ?");
+            preparedStatement.setInt(1, categoriaId);
+            ResultSet rs = preparedStatement.executeQuery();
 
-        if(rs.next()) {
-            categoria.setCategoria(rs.getString("nome"));
-            categoria.setLinha(rs.getString("linha"));
-            categoria.setFaixaEtaria(rs.getString("faixa_etaria"));
+            if(rs.next()) {
+                categoria.setId(rs.getInt("id"));
+                categoria.setCodigo(rs.getString("codigo"));
+                categoria.setCategoria(rs.getString("nome"));
+                categoria.setLinha(rs.getString("linha"));
+                categoria.setFaixaEtaria(rs.getString("faixa_etaria"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         return categoria;
     }
 
-    public void updateCategoria(Categoria categoria) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE categorias set nome = ?, linha = ?, faixa_etaria = ?, updated_at = ? where id = ?");
-        preparedStatement.setString(1, categoria.getCategoria());
-        preparedStatement.setString(2, categoria.getLinha());
-        preparedStatement.setString(3, categoria.getFaixaEtaria());
-        preparedStatement.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
-        preparedStatement.setInt(5, categoria.getId());
+    public void updateCategoria(Categoria categoria) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE categorias set codigo = ?, nome = ?, linha = ?, faixa_etaria = ?, updated_at = ? where id = ?");
+            preparedStatement.setString(1, categoria.getCodigo());
+            preparedStatement.setString(2, categoria.getCategoria());
+            preparedStatement.setString(3, categoria.getLinha());
+            preparedStatement.setString(4, categoria.getFaixaEtaria());
+            preparedStatement.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
+            preparedStatement.setInt(6, categoria.getId());
 
-        preparedStatement.executeUpdate();
-        preparedStatement.close();
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void deleteCategoria(int categoriaId) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM categorias where id = ?");
-        preparedStatement.setInt(1, categoriaId);
-        preparedStatement.executeUpdate();
-        preparedStatement.close();
+    public void deleteCategoria(int categoriaId) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM categorias where id = ?");
+            preparedStatement.setInt(1, categoriaId);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public List<Categoria> getAllCategoria() throws SQLException {
+    public List<Categoria> getAllCategoria() {
         List<Categoria> listaCategoria = new ArrayList<Categoria>();
-
-        Statement statement = connection.createStatement();
-        ResultSet rs = statement.executeQuery("SELECT * FROM categorias");
-        while (rs.next()) {
-            Categoria categoria = new Categoria();
-            categoria.setId(rs.getInt("id"));
-            categoria.setCategoria(rs.getString("nome"));
-            categoria.setLinha(rs.getString("linha"));
-            categoria.setFaixaEtaria(rs.getString("faixa_etaria"));
-            listaCategoria.add(categoria);
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM categorias");
+            while (rs.next()) {
+                Categoria categoria = new Categoria();
+                categoria.setId(rs.getInt("id"));
+                categoria.setCodigo(rs.getString("codigo"));
+                categoria.setCategoria(rs.getString("nome"));
+                categoria.setLinha(rs.getString("linha"));
+                categoria.setFaixaEtaria(rs.getString("faixa_etaria"));
+                listaCategoria.add(categoria);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         return listaCategoria;

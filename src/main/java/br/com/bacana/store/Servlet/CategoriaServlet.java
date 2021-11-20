@@ -10,6 +10,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Objects;
 
 @WebServlet(name = "Categoria", value = "/admin/categoria")
@@ -20,8 +21,8 @@ public class CategoriaServlet extends HttpServlet {
     private CategoriaDao categoriaDao;
     private Categoria categoria;
     private final String INDEX_CATEGORIA = "/admin/categoria/index.jsp";
-    private final String EDITAR_CATEGORIA = "/admin/categoria/index.jsp";
-    private final String EXIBIR_CATEGORIA = "/admin/categoria/index.jsp";
+    private final String EDITAR_CATEGORIA = "/admin/categoria/categoriaForm.jsp";
+    private final String EXIBIR_CATEGORIA = "/admin/categoria/categoriaForm.jsp";
     private final String INDEX_SITE = "/index.jsp";
 
     public CategoriaServlet() throws SQLException, ClassNotFoundException {
@@ -46,21 +47,22 @@ public class CategoriaServlet extends HttpServlet {
 
         if(acao != null) {
             if(acao.equalsIgnoreCase("editar")) {
-                try {
-                    categoriaDao.readCategoria(8);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                int categoriaId = Integer.parseInt(request.getParameter("id"));
+                Categoria categoria = categoriaDao.readCategoria(categoriaId);
+                request.setAttribute("categoria", categoria);
                 forward = EDITAR_CATEGORIA;
-            } else if(acao.equalsIgnoreCase("exibir")) {
-                try {
-                    categoriaDao.readCategoria(8);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+            } else if(acao.equalsIgnoreCase("inserir")) {
                 forward = EXIBIR_CATEGORIA;
+            } else if (acao.equalsIgnoreCase("deletar")) {
+                int categoriaId = Integer.parseInt(request.getParameter("id"));
+                categoriaDao.deleteCategoria(categoriaId);
+                List<Categoria> categorias = categoriaDao.getAllCategoria();
+                request.setAttribute("categorias", categorias);
+                forward = INDEX_CATEGORIA;
             }
         } else {
+            List<Categoria> categorias = categoriaDao.getAllCategoria();
+            request.setAttribute("categorias", categorias);
             forward = INDEX_CATEGORIA;
         }
 
@@ -70,6 +72,11 @@ public class CategoriaServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Categoria categoria = new Categoria();
+        categoria.setCodigo(request.getParameter("codigo"));
+        categoria.setCategoria(request.getParameter("categoria"));
+        categoria.setLinha(request.getParameter("linha"));
+        categoria.setFaixaEtaria(request.getParameter("faixa_etaria"));
 
         session = request.getSession();
         String checked = (String) session.getAttribute("authenticated");
@@ -79,61 +86,21 @@ public class CategoriaServlet extends HttpServlet {
             view.forward(request, response);
         }
 
-        categoria.setCategoria(request.getParameter("categoria"));
-        categoria.setLinha(request.getParameter("linha"));
-        categoria.setFaixaEtaria(request.getParameter("faixa_etaria"));
+        String categoriaId = request.getParameter("id");
 
-        try {
+        System.out.println(categoriaId);
+
+        if(categoriaId == null || categoriaId.isEmpty()) {
             categoriaDao.createCategoria(categoria);
-            view = request.getRequestDispatcher(INDEX_CATEGORIA);
-            view.forward(request, response);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        session = request.getSession();
-        String checked = (String) session.getAttribute("authenticated");
-
-        if(!Objects.equals(checked, "autenticado")) {
-            view = request.getRequestDispatcher(INDEX_SITE);
-            view.forward(request, response);
-        }
-
-        categoria.setId(Integer.parseInt(request.getParameter("id")));
-        categoria.setCategoria(request.getParameter("categoria"));
-        categoria.setLinha(request.getParameter("linha"));
-        categoria.setFaixaEtaria(request.getParameter("faixa_etaria"));
-        try {
+        } else {
+            categoria.setId(Integer.parseInt(categoriaId));
             categoriaDao.updateCategoria(categoria);
-            view = request.getRequestDispatcher(INDEX_CATEGORIA);
-            view.forward(request, response);
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+
+        List<Categoria> categorias = categoriaDao.getAllCategoria();
+        request.setAttribute("categorias", categorias);
+        view = request.getRequestDispatcher(INDEX_CATEGORIA);
+        view.forward(request, response);
     }
 
-    @Override
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        session = request.getSession();
-        String checked = (String) session.getAttribute("authenticated");
-
-        if(!Objects.equals(checked, "autenticado")) {
-            view = request.getRequestDispatcher(INDEX_SITE);
-            view.forward(request, response);
-        }
-
-        categoria.setId(Integer.parseInt(request.getParameter("id")));
-        try {
-            categoriaDao.deleteCategoria(categoria.getId());
-            view = request.getRequestDispatcher(INDEX_CATEGORIA);
-            view.forward(request, response);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }
